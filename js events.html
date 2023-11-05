@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Events Demo</title>
+<style>
+  #hoverDiv {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+  }
+</style>
+</head>
+<body>
+
+<!-- Mouse Events -->
+<button id="clickButton">Click me</button>
+<div id="hoverDiv"></div>
+<p id="mouseCoords">Mouse coordinates: </p>
+<p id="mouseClick">Mouse click: </p>
+
+<!-- Keyboard Events -->
+<input id="keyInput" type="text">
+<p id="keyPressed">Key pressed: </p>
+<p id="keyReleased">Key released: </p>
+<p id="charTyped">Character typed: </p>
+
+<script>
+  // Mouse Events
+  document.getElementById("clickButton").addEventListener("click", function() {
+    alert("Button clicked!");
+  });
+
+  var hoverDiv = document.getElementById("hoverDiv");
+  hoverDiv.addEventListener("mouseover", function() {
+    this.style.backgroundColor = "orange";
+  });
+  hoverDiv.addEventListener("mouseout", function() {
+    this.style.backgroundColor = "lightblue";
+  });
+
+  var mouseCoords = document.getElementById("mouseCoords");
+  document.addEventListener("mousemove", function(event) {
+    var x = event.clientX;
+    var y = event.clientY;
+    mouseCoords.textContent = "Mouse coordinates: " + x + ", " + y;
+  });
+
+  var mouseClick = document.getElementById("mouseClick");
+  document.addEventListener("mousedown", function(event) {
+    var button = event.button === 0 ? "Left" : event.button === 1 ? "Middle" : "Right";
+    mouseClick.textContent = "Mouse click: " + button;
+  });
+
+  // Keyboard Events
+  var keyInput = document.getElementById("keyInput");
+  keyInput.addEventListener("keydown", function(event) {
+    console.log("Key pressed:", event.key);
+    document.getElementById("keyPressed").textContent = "Key pressed: " + event.key;
+  });
+
+  keyInput.addEventListener("keyup", function(event) {
+    console.log("Key released:", event.key);
+    document.getElementById("keyReleased").textContent = "Key released: " + event.key;
+  });
+
+  keyInput.addEventListener("keypress", function(event) {
+    console.log("Character typed:", event.key);
+    document.getElementById("charTyped").textContent = "Character typed: " + event.key;
+  });
+</script>
+
+</body>
+</html>
