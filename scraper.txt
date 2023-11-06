@@ -1,0 +1,24 @@
+$pip install scrapy 
+$scrapy startproject quotes.scraper
+$cd quotes_scraper
+$scrapy genspider quotes quotes.toscrape.com
+
+#quotes_scraper/spide/quotes.py
+import scrapy
+
+class MySpider(scrapy.Spider):
+    name = 'myspider'
+    start_urls = ['http://quotes.toscrape.com']
+
+    def parse(self, response):
+        for quote in response.css('div.quote'):
+            yield {
+                'text': quote.css('span.text::text').get(),
+                'author': quote.css('span small.author::text').get(),
+            }
+
+        next_page = response.css('li.next a::attr(href)').get()
+        if next_page is not None:
+            yield response.follow(next_page, self.parse)
+
+$scrapy crawl myspider
